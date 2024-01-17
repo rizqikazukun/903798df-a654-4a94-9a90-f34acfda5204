@@ -1,7 +1,8 @@
+'use server'
 import { PrincingSchemeType } from '@/app/_typeInterface'
 import React from 'react'
 
-export function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): JSX.Element {
+export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): Promise<JSX.Element> {
     const schema: PrincingSchemeType = prop.schema
     return (
         <div id='princingSchemeCard'

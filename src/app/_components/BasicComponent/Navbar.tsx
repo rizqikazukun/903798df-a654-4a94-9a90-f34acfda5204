@@ -1,12 +1,11 @@
+'use client'
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
 
-export function Navbar() { 
-
-
+export function Navbar(): JSX.Element { 
 
     return (
-        <nav>
+        <nav className='sticky top-0'>
             <div className='container mx-auto flex justify-between items-center px-10 h-20 rounded-b-lg bg-white shadow-sm max-w-[1200px]'>
                 <div id="left-nav">
                     <div className=" h-full">

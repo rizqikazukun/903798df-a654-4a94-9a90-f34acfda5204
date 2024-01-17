@@ -1,6 +1,5 @@
 'use server'
 /* eslint-disable @next/next/no-img-element */
-
 import React from "react";
 import './page.sass'
 import { AdvantageServiceCard, Footer, Navbar, PrincingSchemeCard, ShortUrl } from './_components'
@@ -13,14 +12,15 @@ export default async function Home(): Promise<JSX.Element> {
 
   return (
     <div id='home-page'>
-      <header className=' sticky top-0'>
-        <Navbar />
-      </header>
-
+      <Navbar />
       <main>
 
+        {/* 
+          This is a main feature
+          Because of this an client component
+          It should be sparepart from server component
+        */}
         <ShortUrl AppURL={AppURL} />
-
 
         {/* content */}
         <section id="content"
@@ -65,6 +65,7 @@ export default async function Home(): Promise<JSX.Element> {
         </section>
         {/* end of content */}
 
+        {/* Call to action */}
         <section id='cta'>
           <div className='container mx-auto max-w-[1000px] flex flex-wrap gap-5 max-sm:justify-center 
                           justify-between p-10 bg-white items-center border shadow-sm rounded-lg'>
@@ -82,8 +83,9 @@ export default async function Home(): Promise<JSX.Element> {
             </div>
           </div>
         </section>
+        {/* End of Call to action */}
+        
       </main>
-
       <Footer />
     </div>
   )

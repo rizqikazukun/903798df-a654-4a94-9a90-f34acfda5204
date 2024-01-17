@@ -1,7 +1,8 @@
+'use server'
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
 
-export function Footer() {
+export async function Footer(): Promise<JSX.Element> {
     return (
         <nav>
             <div className='container mx-auto mt-10 p-10 flex flex-wrap gap-5 max-lg:justify-center lg:justify-between items-center px-10 rounded-t-lg bg-white border max-w-[1200px]'>
