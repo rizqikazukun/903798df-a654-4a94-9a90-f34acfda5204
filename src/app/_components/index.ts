@@ -1,4 +1,5 @@
-export * from './Footer'
-export * from './Navbar'
+export * from './BasicComponent/Footer'
+export * from './BasicComponent/Navbar'
 export * from './Card/AdvantageServiceCard'
 export * from './Card/PrincingSchemeCard'
+export * from './Feature/ShortUrl'
