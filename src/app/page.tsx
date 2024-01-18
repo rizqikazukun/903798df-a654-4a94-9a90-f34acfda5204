@@ -4,23 +4,21 @@ import React from "react";
 import './page.sass'
 import { AdvantageServiceCard, Footer, Navbar, PrincingSchemeCard, ShortUrl } from './_components'
 import { AdvantageService, PrincingScheme } from "@/lib/StaticData"
+import { AppURL, BeURL } from "@/lib/Config";
 import Link from 'next/link';
 
 export default async function Home(): Promise<JSX.Element> {
-
-  const AppURL: string | undefined = process.env.APP_URL
-
   return (
     <div id='home-page'>
       <Navbar />
       <main>
 
         {/* 
-          This is a main feature
-          Because of this an client component
-          It should be sparepart from server component
+            This is a main feature
+            Because of this an client component
+            It should be sparepart from server component
         */}
-        <ShortUrl AppURL={AppURL} />
+        <ShortUrl BeURL={BeURL} AppURL={AppURL} />
 
         {/* content */}
         <section id="content"

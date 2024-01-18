@@ -5,19 +5,69 @@ import React from 'react'
 import * as AntIcons from '@ant-design/icons'
 import QRCode from "react-qr-code";
 import d3ToPng from 'd3-svg-to-png'
-import { ComponentPassingType } from '@/lib/TypeInterface';
+import { ComponentPassingType, ShortUrlResultType } from '@/lib/TypeInterface';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { setCookie, hasCookie, getCookie } from 'cookies-next';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Link from 'next/link';
+import Countdown from 'react-countdown';
 
 export function ShortUrl(props: ComponentPassingType): JSX.Element {
-
     const AppURL: string | undefined = props.AppURL
+    const BeURL: string | undefined = props.BeURL
+    const [original_url, setOriginalUrl]: [string, any] = React.useState('')
+    const [generatedUrl, setGeneratedUrl]: [Array<ShortUrlResultType>, any] = React.useState([])
+    const new_session_id: string = uuidv4()
 
-    const download = React.useCallback(async (selector: string, imageName: string): Promise<void> => {
+    const checkSessionID = React.useCallback(async () => {
+        try {
+            const isInitiated: boolean = hasCookie('session_id')
+            if (!isInitiated) {
+                setCookie('session_id', new_session_id)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }, [new_session_id])
+
+
+    const generateShortUrlHandler = React.useCallback(async () => {
+        try {
+            const session_id = getCookie('session_id')
+            const GenerateURL: any = await axios({
+                method: 'post',
+                url: `${BeURL}/shortener/guest`,
+                data: {
+                    url: original_url,
+                    session_id
+                }
+            })
+
+            if (generatedUrl.length === 0) {
+                setGeneratedUrl([GenerateURL.data.data])
+            } else {
+                setGeneratedUrl([...generatedUrl, GenerateURL.data.data])
+            }
+        } catch (error: any) {
+            console.log(error)
+            alert(error?.message)
+        }
+    }, [BeURL, generatedUrl, original_url])
+
+
+    const qrDownloadHandler = React.useCallback(async (selector: string, imageName: string): Promise<void> => {
         await d3ToPng(selector, imageName, {
             scale: 4,
             format: 'png',
             download: true
         })
     }, [])
+
+
+    React.useEffect(() => {
+        checkSessionID()
+    }, [checkSessionID])
 
 
     return (
@@ -30,37 +80,55 @@ export function ShortUrl(props: ComponentPassingType): JSX.Element {
 
             <div className="flex gap-5 w-full flex-wrap justify-center">
                 <input className=" flex-grow outline-none bg-page-background rounded-full p-2 border" type="text"
-                    placeholder="Input your worse url make it woozie" />
-                <button className="woozify-button p-2 rounded-full font-medium hover:font-bold text-white w-[100px]">
+                    placeholder="Input your worse url make it woozie"
+                    onChange={e => setOriginalUrl(e.target.value)} />
+                <button className="woozify-button p-2 rounded-full font-medium hover:font-bold text-white w-[100px]"
+                    onClick={generateShortUrlHandler}>
                     Woozify
                 </button>
             </div>
 
             <div id="shortener-result" className="p-4 flex flex-col w-full">
-                <div className=" border rounded-lg flex justify-between items-center p-5">
-                    <div className="flex gap-5">
-                        <div >
-                            <QRCode size={100} id="asd78" value={"http://localhost:3000"} />
-                        </div>
-                        <div className="flex flex-col justify-center">
-                            <p className=" font-bold">
-                                Short Url : {AppURL}/Hu67
-                            </p>
-                            <p className=" break-all">Original Url :
-                                {'https://www.google.com/search?q=the+best+app+shortener&sca_esv=598740777&ei=FEKmZcvZLoKE4-EPo8aY8AI&ved='.slice(0, 80)}
-                            </p>
-                        </div>
-                    </div>
+                {
+                    generatedUrl.length === 0 ? null
+                        : generatedUrl.map((url, index) => (
+                            <div key={index} className=" border rounded-lg flex flex-wrap justify-between items-center content-center p-5 m-2 gap-2">
 
-                    <div className="flex items-center">
-                        <button className="flex rounded-full p-2 items-center" onClick={() => {
-                            download('#asd78', 'QR')
-                        }}>
-                            <AntIcons.CopyFilled className=" text-gray-500" /> <p>Copy</p>
-                        </button>
-                    </div>
+                                <div className='flex flex-wrap gap-5'>
 
-                </div>
+                                    <QRCode className='mx-auto'
+                                        size={100}
+                                        id={`QR-${url.url_short}`}
+                                        value={`${AppURL}/${url.url_short}`} />
+
+                                    <div className="flex flex-col justify-center gap-1 min-w-[100px] max-w-[400px]">
+                                        <Link className='hover:text-red-800 break-all font-bold' href={`${AppURL}/${url.url_short}`}>
+                                            {`${AppURL}/${url.url_short}`}
+                                        </Link>
+                                        <p className="break-all">
+                                            {url.url_original.slice(0, 80)}...
+                                        </p>
+                                        <p>
+                                            Expire : <Countdown date={Number(url.url_ttl)} />
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+
+                                    <button className="flex rounded-full p-2 gap-2 border items-center hover:text-red-800 hover:border-red-700"
+                                        onClick={() => { qrDownloadHandler(`#QR-${url.url_short}`, `QR-${url.url_original}`) }}>
+                                        <AntIcons.CloudDownloadOutlined /> <p>Download QR</p>
+                                    </button>
+
+                                    <CopyToClipboard text={`${AppURL}/${url.url_short}`}>
+                                        <button className="flex rounded-full p-2 gap-2 border items-center hover:text-red-800 hover:border-red-700">
+                                            <AntIcons.CopyOutlined /> <p>Copy URL</p>
+                                        </button>
+                                    </CopyToClipboard>
+                                </div>
+                            </div>
+                        ))
+                }
             </div>
         </section>
     )
