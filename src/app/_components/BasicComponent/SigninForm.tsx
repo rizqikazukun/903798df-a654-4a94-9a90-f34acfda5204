@@ -1,9 +1,9 @@
 'use client'
-import { ComponentPassing } from '@/lib/TypeInterface'
+import { ComponentPassingType } from '@/lib/TypeInterface'
 import Link from 'next/link'
 import React from 'react'
 
-export function SigninForm(prop: ComponentPassing): JSX.Element {
+export function SigninForm(prop: ComponentPassingType): JSX.Element {
 
   const BackendURL: string | undefined = prop.BeURL || undefined
 

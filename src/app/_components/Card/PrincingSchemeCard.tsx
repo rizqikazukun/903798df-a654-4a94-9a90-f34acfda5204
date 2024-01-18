@@ -1,5 +1,5 @@
 'use server'
-import { PrincingSchemeType } from '@/app/_typeInterface'
+import { PrincingSchemeType } from '@/lib/TypeInterface'
 import React from 'react'
 
 export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): Promise<JSX.Element> {

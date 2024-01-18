@@ -1,4 +1,4 @@
-export interface ComponentPassing { 
+export interface ComponentPassingType { 
     AppURL?: string | undefined 
     BeURL?: string | undefined 
 }

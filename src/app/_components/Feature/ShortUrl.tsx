@@ -5,11 +5,11 @@ import React from 'react'
 import * as AntIcons from '@ant-design/icons'
 import QRCode from "react-qr-code";
 import d3ToPng from 'd3-svg-to-png'
+import { ComponentPassingType } from '@/lib/TypeInterface';
 
+export function ShortUrl(props: ComponentPassingType): JSX.Element {
 
-export function ShortUrl(props : {AppURL: string | undefined}) {
-
-    const AppURL: string | undefined = props.AppURL 
+    const AppURL: string | undefined = props.AppURL
 
     const download = React.useCallback(async (selector: string, imageName: string): Promise<void> => {
         await d3ToPng(selector, imageName, {
@@ -53,7 +53,7 @@ export function ShortUrl(props : {AppURL: string | undefined}) {
                     </div>
 
                     <div className="flex items-center">
-                        <button className="flex rounded-full p-2 items-center" onClick={()=>{
+                        <button className="flex rounded-full p-2 items-center" onClick={() => {
                             download('#asd78', 'QR')
                         }}>
                             <AntIcons.CopyFilled className=" text-gray-500" /> <p>Copy</p>

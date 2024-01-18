@@ -1,7 +1,7 @@
 'use server'
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import { AdvantageServiceType } from '@/app/_typeInterface'
+import { AdvantageServiceType } from '@/lib/TypeInterface'
 
 export async function AdvantageServiceCard({image, title, description}: AdvantageServiceType): Promise<JSX.Element> {
     return (
