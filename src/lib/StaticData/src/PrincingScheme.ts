@@ -1,4 +1,4 @@
-import { PrincingSchemeType, UserType } from "../_typeInterface";
+import { PrincingSchemeType, UserType } from "../../TypeInterface";
 
 export const PrincingScheme: Array<PrincingSchemeType> = [
     {

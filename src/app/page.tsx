@@ -3,7 +3,7 @@
 import React from "react";
 import './page.sass'
 import { AdvantageServiceCard, Footer, Navbar, PrincingSchemeCard, ShortUrl } from './_components'
-import { AdvantageService, PrincingScheme } from "./_staticData"
+import { AdvantageService, PrincingScheme } from "@/lib/StaticData"
 import Link from 'next/link';
 
 export default async function Home(): Promise<JSX.Element> {

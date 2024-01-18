@@ -1,4 +1,4 @@
-import { AdvantageServiceType } from "../_typeInterface";
+import { AdvantageServiceType } from "../../TypeInterface";
 
 export const AdvantageService: Array<AdvantageServiceType> = [
     {

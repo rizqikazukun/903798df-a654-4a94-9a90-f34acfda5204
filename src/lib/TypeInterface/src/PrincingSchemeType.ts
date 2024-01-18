@@ -1,4 +1,4 @@
-import { UserType } from "."
+import { UserType } from ".."
 
 export interface PrincingSchemeType {
     title: UserType
