@@ -11,16 +11,19 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "axios": "^1.6.5",
+    "cookies-next": "^4.1.0",
     "d3-svg-to-png": "^0.3.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-qr-code": "^2.0.12"
+    "react-qr-code": "^2.0.12",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
