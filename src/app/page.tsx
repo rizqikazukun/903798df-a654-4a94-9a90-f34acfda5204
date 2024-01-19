@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import './page.sass'
-import { AdvantageServiceCard, Footer, Navbar, PrincingSchemeCard, ShortUrl } from './_components'
+import { AdvantageServiceCard, Footer, Navbar, PrincingSchemeCard, WoozService } from './_components'
 import { AdvantageService, PrincingScheme } from "@/lib/StaticData"
 import { AppURL, BeURL } from "@/lib/Config";
 import Link from 'next/link';
@@ -18,7 +18,7 @@ export default async function Home(): Promise<JSX.Element> {
             Because of this an client component
             It should be sparepart from server component
         */}
-        <ShortUrl BeURL={BeURL} AppURL={AppURL} />
+        <WoozService BeURL={BeURL} AppURL={AppURL} />
 
         {/* content */}
         <section id="content"

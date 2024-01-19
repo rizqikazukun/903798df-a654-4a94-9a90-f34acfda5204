@@ -7,30 +7,26 @@ import QRCode from "react-qr-code";
 import d3ToPng from 'd3-svg-to-png'
 import { ComponentPassingType, ShortUrlResultType } from '@/lib/TypeInterface';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
-import { setCookie, hasCookie, getCookie } from 'cookies-next';
+
+import { getCookie } from 'cookies-next';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Link from 'next/link';
 import Countdown from 'react-countdown';
+import { GetSessionId } from '@/lib/ServerAction';
 
-export function ShortUrl(props: ComponentPassingType): JSX.Element {
+export function WoozService(props: ComponentPassingType): JSX.Element {
     const AppURL: string | undefined = props.AppURL
     const BeURL: string | undefined = props.BeURL
     const [original_url, setOriginalUrl]: [string, any] = React.useState('')
     const [generatedUrl, setGeneratedUrl]: [Array<ShortUrlResultType>, any] = React.useState([])
-    const new_session_id: string = uuidv4()
 
     const checkSessionID = React.useCallback(async () => {
         try {
-            const isInitiated: boolean = hasCookie('session_id')
-            if (!isInitiated) {
-                setCookie('session_id', new_session_id)
-            }
+            await GetSessionId()
         } catch (error) {
             console.log(error)
         }
-    }, [new_session_id])
-
+    }, [])
 
     const generateShortUrlHandler = React.useCallback(async () => {
         try {
