@@ -1,5 +1,6 @@
 'use server'
 import { PrincingSchemeType } from '@/lib/TypeInterface'
+import Link from 'next/link'
 import React from 'react'
 
 export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): Promise<JSX.Element> {
@@ -35,9 +36,11 @@ export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): 
                         Current
                     </button>
                     : schema.title === 'Free'
-                        ? <button className="woozify-button p-2 rounded-full hover:font-bold text-white">
-                            Sign UP
+                        ? <Link href="/user/register">
+                        <button className="woozify-button p-2 rounded-full hover:font-bold text-white">
+                            Register
                         </button>
+                        </Link>
                         : schema.title === 'Paid'
                             ? <button className=" bg-gray-400 p-2 rounded-full text-white" disabled>
                                 Coming Soon
