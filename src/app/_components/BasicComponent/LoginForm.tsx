@@ -43,7 +43,7 @@ export function LoginForm(prop: ComponentPassingType): JSX.Element {
         showConfirmButton: false
       })
 
-      router.replace('/')
+      window.location.reload()
     } catch (error: any) {
       console.log(error)
       let message: string = ''
