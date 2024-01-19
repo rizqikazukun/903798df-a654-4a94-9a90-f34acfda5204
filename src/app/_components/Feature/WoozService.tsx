@@ -2,21 +2,15 @@
 'use client'
 
 import React from 'react'
-import * as AntIcons from '@ant-design/icons'
-import QRCode from "react-qr-code";
-import d3ToPng from 'd3-svg-to-png'
-import { ComponentPassingType, ShortUrlResultType } from '@/lib/TypeInterface';
 import axios from 'axios';
-
+import { ComponentPassingType, ShortUrlResultType } from '@/lib/TypeInterface';
 import { getCookie } from 'cookies-next';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import Link from 'next/link';
-import Countdown from 'react-countdown';
 import { GetSessionId } from '@/lib/ServerAction';
+import ShortResultCard from '../Card/ShortResultCard';
 
 export function WoozService(props: ComponentPassingType): JSX.Element {
-    const AppURL: string | undefined = props.AppURL
     const BeURL: string | undefined = props.BeURL
+    const AppURL: string | undefined = props.AppURL
     const [original_url, setOriginalUrl]: [string, any] = React.useState('')
     const [generatedUrl, setGeneratedUrl]: [Array<ShortUrlResultType>, any] = React.useState([])
 
@@ -51,16 +45,6 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
         }
     }, [BeURL, generatedUrl, original_url])
 
-
-    const qrDownloadHandler = React.useCallback(async (selector: string, imageName: string): Promise<void> => {
-        await d3ToPng(selector, imageName, {
-            scale: 4,
-            format: 'png',
-            download: true
-        })
-    }, [])
-
-
     React.useEffect(() => {
         checkSessionID()
     }, [checkSessionID])
@@ -88,41 +72,7 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
                 {
                     generatedUrl.length === 0 ? null
                         : generatedUrl.map((url, index) => (
-                            <div key={index} className=" border rounded-lg flex flex-wrap justify-between items-center content-center p-5 m-2 gap-2">
-
-                                <div className='flex flex-wrap gap-5'>
-
-                                    <QRCode className='mx-auto'
-                                        size={100}
-                                        id={`QR-${url.url_short}`}
-                                        value={`${AppURL}/${url.url_short}`} />
-
-                                    <div className="flex flex-col justify-center gap-1 min-w-[100px] max-w-[400px]">
-                                        <Link className='hover:text-red-800 break-all font-bold' href={`${AppURL}/${url.url_short}`}>
-                                            {`${AppURL}/${url.url_short}`}
-                                        </Link>
-                                        <p className="break-all">
-                                            {url.url_original.slice(0, 80)}...
-                                        </p>
-                                        <p>
-                                            Expire : <Countdown date={Number(url.url_ttl)} />
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col items-center gap-2">
-
-                                    <button className="flex rounded-full p-2 gap-2 border items-center hover:text-red-800 hover:border-red-700"
-                                        onClick={() => { qrDownloadHandler(`#QR-${url.url_short}`, `QR-${url.url_original}`) }}>
-                                        <AntIcons.CloudDownloadOutlined /> <p>Download QR</p>
-                                    </button>
-
-                                    <CopyToClipboard text={`${AppURL}/${url.url_short}`}>
-                                        <button className="flex rounded-full p-2 gap-2 border items-center hover:text-red-800 hover:border-red-700">
-                                            <AntIcons.CopyOutlined /> <p>Copy URL</p>
-                                        </button>
-                                    </CopyToClipboard>
-                                </div>
-                            </div>
+                            <ShortResultCard key={index} data={url} AppURL={AppURL} BeURL={BeURL} />
                         ))
                 }
             </div>
