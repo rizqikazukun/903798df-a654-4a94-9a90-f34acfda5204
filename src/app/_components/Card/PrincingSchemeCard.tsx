@@ -12,7 +12,7 @@ export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): 
             <div className='flex flex-col gap-2'>
                 <div className='w-full flex flex-col justify-center'>
                     <p className='font-bold text-center'>
-                        {schema.title}
+                        {schema.title.charAt(0).toUpperCase() + schema.title.slice(1)}
                     </p>
                     <p className='font-medium text-center'>
                         Features
@@ -31,17 +31,17 @@ export async function PrincingSchemeCard(prop: { schema: PrincingSchemeType }): 
             </div>
 
             {
-                schema.title === 'Guest'
+                schema.title === 'guest'
                     ? <button className="bg-gray-400 p-2 rounded-full text-white" disabled>
                         Current
                     </button>
-                    : schema.title === 'Free'
+                    : schema.title === 'free'
                         ? <Link href="/user/register">
-                        <button className="woozify-button p-2 rounded-full hover:font-bold text-white">
-                            Register
-                        </button>
+                            <button className="woozify-button p-2 rounded-full hover:font-bold text-white">
+                                Register
+                            </button>
                         </Link>
-                        : schema.title === 'Paid'
+                        : schema.title === 'paid'
                             ? <button className=" bg-gray-400 p-2 rounded-full text-white" disabled>
                                 Coming Soon
                             </button>

@@ -4,9 +4,10 @@
 import React from 'react'
 import axios from 'axios';
 import { ComponentPassingType, ShortUrlResultType } from '@/lib/TypeInterface';
-import { getCookie } from 'cookies-next';
+import { getCookie, hasCookie } from 'cookies-next';
 import { GetSessionId } from '@/lib/ServerAction';
 import ShortResultCard from '../Card/ShortResultCard';
+import { CheckTokenOrRefresh } from '@/lib/ServerAction';
 
 export function WoozService(props: ComponentPassingType): JSX.Element {
     const BeURL: string | undefined = props.BeURL
@@ -25,14 +26,30 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
     const generateShortUrlHandler = React.useCallback(async () => {
         try {
             const session_id = getCookie('session_id')
-            const GenerateURL: any = await axios({
-                method: 'post',
-                url: `${BeURL}/shortener/guest`,
-                data: {
-                    url: original_url,
-                    session_id
-                }
-            })
+            const accessToken = await CheckTokenOrRefresh()
+            let GenerateURL: any
+
+            if (accessToken) {
+                GenerateURL = await axios({
+                    method: 'post',
+                    url: `${BeURL}/shortener`,
+                    headers: {
+                        Authorization: accessToken
+                    },
+                    data: {
+                        url: original_url,
+                    }
+                })
+            } else {
+                GenerateURL = await axios({
+                    method: 'post',
+                    url: `${BeURL}/shortener/guest`,
+                    data: {
+                        url: original_url,
+                        session_id
+                    }
+                })
+            }
 
             if (generatedUrl.length === 0) {
                 setGeneratedUrl([GenerateURL.data.data])
