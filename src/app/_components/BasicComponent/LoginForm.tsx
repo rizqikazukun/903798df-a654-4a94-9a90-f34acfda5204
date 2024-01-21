@@ -4,14 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { setCookie } from 'cookies-next'
 
 export function LoginForm(prop: ComponentPassingType): JSX.Element {
   const MySwal = withReactContent(Swal)
   const BackendURL: string | undefined = prop.BeURL || undefined
-  const router = useRouter()
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -78,7 +76,7 @@ export function LoginForm(prop: ComponentPassingType): JSX.Element {
 
       }
     }
-  }, [BackendURL, MySwal, email, password, router])
+  }, [BackendURL, MySwal, email, password])
 
 
   return (
