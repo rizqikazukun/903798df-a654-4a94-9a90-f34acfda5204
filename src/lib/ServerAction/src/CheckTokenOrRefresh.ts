@@ -3,18 +3,20 @@
 import axios from "axios"
 import { BeURL } from "../../Config"
 import { cookies } from 'next/headers'
+import { hasCookie, getCookie, setCookie, deleteCookie, CookieValueTypes } from "cookies-next"
 import { RefreshTokenResponseType } from "../../TypeInterface"
 
-export async function CheckTokenOrRefresh(): Promise<string | boolean> {
+export async function CheckTokenOrRefresh(): Promise<CookieValueTypes> {
     try {
-        const oldAccessToken : boolean = cookies().has('accessToken')
+        const oldAccessToken: boolean = hasCookie('accessToken', {cookies})
 
         if (oldAccessToken) {
-            const getOldAccessToken : string = String(cookies().get('accessToken'))
-            return `Bearer ${getOldAccessToken}`
+            const getOldAccessToken: CookieValueTypes = getCookie('accessToken', {cookies})
+            return getOldAccessToken
         }
 
-        const oldRefreshToken: string = String(cookies().get('refreshToken'))
+        const oldRefreshToken: CookieValueTypes = getCookie('refreshToken', {cookies})
+
 
         const getNewToken: any = await axios({
             method: 'post',
@@ -26,14 +28,18 @@ export async function CheckTokenOrRefresh(): Promise<string | boolean> {
 
         const response: RefreshTokenResponseType = getNewToken.data
 
-        cookies().delete('accessToken')
-        cookies().delete('refreshToken')
+        deleteCookie('accessToken', {cookies})
+        deleteCookie('refreshToken', {cookies})
 
-        cookies().set('accessToken', `Bearer ${response.accessToken}`)
-        cookies().set('accessToken', `Bearer ${response.refreshToken}`)
+        const currentTime : number = new Date().getTime()
+        const accessExp : number = 15 * 60 * 1000
+        const refreshExp : number = 7 * 24 * 60 * 60 * 10000 
+
+        setCookie('accessToken', `Bearer ${response.accessToken}`, {cookies, expires: new Date(currentTime+accessExp)})
+        setCookie('refreshToken', `Bearer ${response.refreshToken}`, {cookies, expires: new Date(currentTime+refreshExp)})
         
         return `Bearer ${response.accessToken}`
     } catch (error) {
-        return false
+        return undefined
     }
 }
