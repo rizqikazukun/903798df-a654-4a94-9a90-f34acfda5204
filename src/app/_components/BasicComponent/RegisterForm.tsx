@@ -18,8 +18,11 @@ export function RegisterForm(prop: ComponentPassingType): JSX.Element {
   const [password, setPassword] = React.useState('')
   const [passwordC, setPasswordC] = React.useState('')
 
+  const [loading, setLoading]: [boolean, any] = React.useState(false)
+
   const registerHandler = React.useCallback(async () => {
     try {
+      setLoading(true)
       if (password !== passwordC) {
         throw { status: 422, message: 'Password confirmation not match' }
       }
@@ -65,12 +68,12 @@ export function RegisterForm(prop: ComponentPassingType): JSX.Element {
           showConfirmButton: true,
         })
       } else if (error.response.status === 400) {
-      
+
         arrayMessage = error.response.data.message
         message += '<div id="custom-message">'
 
         for (const index in arrayMessage) {
-          message += `<p>${Number(index)+1}. ${arrayMessage[index]}.</p>`
+          message += `<p>${Number(index) + 1}. ${arrayMessage[index]}.</p>`
         }
 
         message += '</div>'
@@ -81,8 +84,10 @@ export function RegisterForm(prop: ComponentPassingType): JSX.Element {
           showCancelButton: false,
           showConfirmButton: true,
         })
-        
+
       }
+    } finally {
+      setLoading(false)
     }
   }, [BackendURL, MySwal, email, first_name, last_name, password, passwordC, router])
 
@@ -104,8 +109,8 @@ export function RegisterForm(prop: ComponentPassingType): JSX.Element {
 
       <div className='flex flex-col w-full items-center justify-center gap-2'>
         <button className='woozify-button border shadow-sm p-2 rounded-full w-full hover:font-bold text-white'
-          onClick={registerHandler}>
-          Register
+          onClick={registerHandler} disabled={loading}>
+          {loading ? "Loading" : "Register"}
         </button>
         <p>
           Have an account? {' '}
