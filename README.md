@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Wooz Shortener App - frontend
 
-## Getting Started
+![logo](./docs/images/logo.png)
 
-First, run the development server:
+## Table Of Content
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Wooz Shortener App - frontend](#wooz-shortener-app---frontend)
+  - [Table Of Content](#table-of-content)
+  - [Description](#description)
+    - [Frontend Feature](#frontend-feature)
+  - [Project Challange](#project-challange)
+  - [Screenshoot](#screenshoot)
+  - [How to run](#how-to-run)
+    - [On Local Development](#on-local-development)
+    - [On Production](#on-production)
+  - [Environment Variable](#environment-variable)
+  - [Backend Project](#backend-project)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Woozify is a service that allows users to shorten URLs and generate QR codes. The features include shortening URLs, providing engagement analytics, and a QR Maker. The pricing types are guest, free, and paid.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Frontend Feature
 
-## Learn More
+- Create Short URL
+- Create QR
+- Redirect to original
+- User Register
+- User Login
+- User Dashboard
+- Visitor Counter for registered user
 
-To learn more about Next.js, take a look at the following resources:
+Developer : Rizqi Pratama  
+Deploy on : Vercel  
+Deployment URL : <http://wooz.vercel.app>  
+Tech Stack : NextJS, Typescript, React, Tailwind, SASS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Challange
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- User interface:
+  - Allow users to enter a long URL and receive a shortened version ✅
+- Display shortened URL:
+  - Show the shortened URL and the original URL side by side ✅
+- Copy shortened URL:
+  - Allow users to easily copy the shortened URL to their clipboard ✅
+- Optional features:
+  - Track clicks on shortened URLs ✅
+  - Show usage statistics for shortened URLs ✅
 
-## Deploy on Vercel
+## Screenshoot
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![screenshoot](./docs/images/screenshoot.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## How to run
+
+### On Local Development  
+
+1. Clone this repo
+2. Setup the Environment Variable
+3. Install Dependencies ``yarn install``
+4. Start the app ``yarn dev``
+
+### On Production
+
+There are various ways to run the application in production. Every detailed step is important, please refer to documentation provided by your cloud provider.
+
+## Environment Variable
+
+For the environment variable there is file reference at root this project named ``.env.example``, use this as the reference to configuring environment variable for this app. **Important: All environment variables must be filled.**
+
+## Backend Project
+
+<https://github.com/rizqikazukun/703534e6-4c5a-4158-9f37-5f27c6036a7d>
