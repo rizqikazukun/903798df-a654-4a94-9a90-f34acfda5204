@@ -11,9 +11,7 @@ import ShortResultCardDashboard from '../Card/ShortResultCardPrivateDashboard'
 export function UserDashboard(props: ComponentPassingType) {
     const BeURL: string | undefined = props.BeURL
     const AppURL: string | undefined = props.AppURL
-
-    const getProfile: string | any = getCookie('profile')
-    const profile = JSON.parse(getProfile)
+    const profile = JSON.parse(props.data)
 
     const [url, setUrl]: [UrlWithAnalyticTypes, any] = React.useState([])
 
