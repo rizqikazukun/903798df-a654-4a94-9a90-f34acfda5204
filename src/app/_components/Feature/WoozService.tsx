@@ -65,8 +65,10 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
         } catch (error: any) {
             let message: string = ''
 
-            if (error.response.status === 400) {
+            if (error?.response?.status === 400) {
                 message = "Please input valid url"
+            } else {
+                message = "Internal application error"
             }
 
             MySwal.fire({
@@ -103,7 +105,7 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
                         const input: any = document.getElementById('input-url')
                         input.value = ''
                     }}>
-                    Woozify
+                    {loading ? "Loading" : "Woozify"}
                 </button>
             </div>
 
