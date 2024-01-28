@@ -15,7 +15,6 @@ export function UserDashboard(props: ComponentPassingType) {
 
     const [url, setUrl]: [UrlWithAnalyticTypes, any] = React.useState([])
 
-
     const initPage = React.useCallback(async () => {
         try {
             const accessToken = await CheckTokenOrRefresh()

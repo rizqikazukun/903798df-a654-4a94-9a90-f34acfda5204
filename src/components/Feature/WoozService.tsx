@@ -10,6 +10,7 @@ import ShortResultCard from '../Card/ShortResultCard';
 import { CheckTokenOrRefresh } from '@/lib/ServerAction';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import './WoozService.sass'
 
 export function WoozService(props: ComponentPassingType): JSX.Element {
     const BeURL: string | undefined = props.BeURL
@@ -88,28 +89,27 @@ export function WoozService(props: ComponentPassingType): JSX.Element {
 
 
     return (
-        <section id="feature" className="container mx-auto my-10 flex flex-col bg-white justify-center
-                                        items-center rounded-lg border shadow-sm max-w-[1000px] p-10 gap-10">
+        <section id="feature-service">
             <img className="h-40" src="/assets/images/wooz-logo.svg" alt="logo" />
-            <h1 id='hero-text' className="text-center text-3xl font-bold max-w-[700px]">
+            <h1 id='hero-text'>
                 Woozify your URL!
             </h1>
 
             <div className="flex gap-5 w-full flex-wrap justify-center">
-                <input id='input-url' className=" flex-grow outline-none bg-page-background rounded-full p-2 border" type="text"
+                <input id='input-url' type="text"
                     placeholder="Input your worse url make it woozie"
                     onChange={e => setOriginalUrl(e.target.value)} />
                 <button className="woozify-button p-2 rounded-full font-medium hover:font-bold text-white w-[100px]"
                     onClick={() => {
                         generateShortUrlHandler()
-                        const input: any = document.getElementById('input-url')
+                        const input: HTMLInputElement | any = document.getElementById('input-url')
                         input.value = ''
                     }}>
                     {loading ? "Loading" : "Woozify"}
                 </button>
             </div>
 
-            <div id="shortener-result" className="p-4 flex flex-col w-full">
+            <div id="shortener-result">
                 {
                     generatedUrl.length === 0 ? null
                         : generatedUrl.map((url, index) => (

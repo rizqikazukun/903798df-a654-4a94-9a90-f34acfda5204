@@ -20,8 +20,10 @@ body
   background: rgb(179,0,18)
   background: linear-gradient(327deg, rgba(179,0,18,1) 20%, rgba(255,0,0,1) 92%)
 
-  // Overiding the swal style
+.woozify-custom-1-button
+  @apply woozify-button p-2 rounded-full font-medium hover:font-bold text-white w-[180px]
 
+  // Overiding the swal style
 .swal2-title
   font-size: 14pt !important
 
@@ -38,3 +40,22 @@ body
 
 .swal2-confirm
   background-color: #c30000 !important
+
+.outlined-btn
+  @apply p-2 rounded-full font-medium hover:font-bold text-gray-700
+  @apply hover:text-red-700 border hover:border-red-600 w-[180px]
+
+.login-register-container
+  @apply mx-auto md:my-8 py-28 px-10 max-w-[800px] bg-white border
+  @apply shadow-sm rounded-lg flex flex-col justify-center items-center gap-2
+
+#user-dashboard-container
+  @apply container mx-auto max-w-[1000px] my-10 rounded-lg border shadow-sm bg-white
+
+#navbar-container
+  @apply container mx-auto flex justify-between items-center px-10 h-20
+  @apply rounded-b-lg bg-white shadow-sm max-w-[1200px]
+
+footer
+  @apply container mx-auto p-10 mt-10 flex flex-wrap gap-5 max-lg:justify-center
+  @apply lg:justify-between items-center rounded-t-lg bg-white border max-w-[1200px]

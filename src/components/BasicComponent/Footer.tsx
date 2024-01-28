@@ -5,8 +5,7 @@ import React from 'react'
 
 export async function Footer(): Promise<JSX.Element> {
     return (
-        <footer className='container mx-auto p-10 mt-10 flex flex-wrap gap-5 max-lg:justify-center 
-                            lg:justify-between items-center rounded-t-lg bg-white border max-w-[1200px]'>
+        <footer>
             <Link href='/#'>
                 <img className=" h-14" src="/assets/images/wooz-logo.svg" alt="logo" />
             </Link>
